@@ -1,5 +1,6 @@
 import base64
 import json
+import logging
 import os
 import sys
 import threading
@@ -13,6 +14,10 @@ from jsonrpc.manager import JSONRPCResponseManager
 from SocketServer import BaseRequestHandler, BaseServer, ThreadingMixIn
 
 __all__ = ["add_method"]
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
 
 
 class MultiProcessingSever(BaseServer):
@@ -58,12 +63,12 @@ class MultiProcessingSever(BaseServer):
 
 class JsonRpcRequestHandler(BaseRequestHandler):
     def handle(self):
-        print("client connected", self.request)
+        logger.debug("client %s connected", self.request)
         while True:
             try:
                 data = self.request.recv_bytes()
             except EOFError:
-                print("client disconnected ", self.request)
+                logger.debug("client %s disconnected ", self.request)
                 break
             response = JSONRPCResponseManager.handle(data, self.server.dispatcher)
             if response:
@@ -132,7 +137,9 @@ def get_or_create_server(service):
             authkey=get_credentials(service),
         )
         server.serve_forever()
-        print("Server started at", server.server_address, service)
+        logger.info(
+            "Server for service %s started at %s", service, server.server_address
+        )
         SERVERS[service] = server
     return server
 
