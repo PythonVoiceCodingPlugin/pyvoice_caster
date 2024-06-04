@@ -2,6 +2,10 @@
 
 These are the caster bindings for the [pyvoice project](ttps://github.com/PythonVoiceCodingPlugin/pyvoice)
 
+<div>
+<img src="https://github.com/PythonVoiceCodingPlugin/assets/blob/main/pyvoice_logo.png" align="right" height=320 width=320/>
+</div>
+
 <!-- MarkdownTOC  autolink="true" -->
 
 - [Installation](#installation)
