@@ -43,6 +43,9 @@ class MultiProcessingSever(BaseServer):
         self._handle_request_noblock()
 
     def server_activate(self):
+        #  on unix unlink the socket first,
+        if os.name != "nt" and os.path.exists(self.server_address):
+            os.unlink(self.server_address)
         self.socket = Listener(self.server_address, authkey=self.authkey)
 
     def server_close(self):
