@@ -112,11 +112,11 @@ def get_credentials(service):
     value = credentials.get(service, None)
     if value is None:
         value = os.urandom(16)
-        credentials[service] = str(base64.b64encode(value))
+        credentials[service] = base64.b64encode(value).decode("ascii")
         with open(CREDENTIALS_FILE, "w") as f:
             json.dump(credentials, f)
     else:
-        value = base64.b64decode(value)
+        value = base64.b64decode(value.encode("ascii"))
     return value
 
 
