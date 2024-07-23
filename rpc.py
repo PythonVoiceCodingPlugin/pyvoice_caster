@@ -11,7 +11,11 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "deps.z
 
 from jsonrpc.dispatcher import Dispatcher
 from jsonrpc.manager import JSONRPCResponseManager
-from SocketServer import BaseRequestHandler, BaseServer, ThreadingMixIn
+
+try: # python 2
+    from SocketServer import BaseRequestHandler, BaseServer, ThreadingMixIn
+except ImportError: # python 3
+    from socketserver import BaseRequestHandler, BaseServer, ThreadingMixIn
 
 __all__ = ["add_method"]
 
